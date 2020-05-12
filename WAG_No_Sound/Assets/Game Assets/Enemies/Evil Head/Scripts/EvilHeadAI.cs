@@ -11,11 +11,14 @@ using UnityEngine;
 public class EvilHeadAI : Creature
 {
     AudioSource audio_source;
+
+    [Header("Sounds")]
     public AudioClip hover_audio_clip;
     public AudioClip charge_audio_clip;
     public AudioClip death_audio_clip;
     public AudioClip bite_audio_clip;
     public AudioClip telegraph_audio_clip;
+
     [Header("Evil Head Specifics")]
     public GameObject SmokeFX;
     public GameObject deathFX;
@@ -53,8 +56,12 @@ public class EvilHeadAI : Creature
 
     public override void Start(){
 		base.Start();
-        HoverSoundStart.Post(this.gameObject);
+        //HoverSoundStart.Post(this.gameObject);
 
+        // HOVER SOUND
+        audio_source.clip = hover_audio_clip;
+        audio_source.Play();
+        audio_source.loop = true;
     }
 
     public override void OnSpotting()
@@ -85,7 +92,10 @@ public class EvilHeadAI : Creature
         thisNavMeshAgent.destination = transform.position;
         targetLocation = targetOfNPC.transform.position + Vector3.up;
         StartCoroutine(RotateTowardsTarget(targetLocation, 1f));
-        TelegraphSound.Post(gameObject);
+
+        // TELEGRAPH SOUND
+        audio_source.PlayOneShot(telegraph_audio_clip, 0.25f);
+        //TelegraphSound.Post(gameObject);
     }
 
 
@@ -125,10 +135,13 @@ public class EvilHeadAI : Creature
     IEnumerator ChargeTowardsPlayer(float seconds)
     {
         //print(Time.realtimeSinceStartup + ": ChargeTowardsPlayer");
-        TelegraphSound.Stop(gameObject,0, AkCurveInterpolation.AkCurveInterpolation_Linear);
-        ChargeSound.Post(gameObject);
-        audio_source.clip = charge_audio_clip;
-        audio_source.Play();
+        //TelegraphSound.Stop(gameObject,0, AkCurveInterpolation.AkCurveInterpolation_Linear);
+        //ChargeSound.Post(gameObject);
+
+        //CHARGE SOUND
+        //audio_source.clip = telegraph_audio_clip;
+        audio_source.PlayOneShot(charge_audio_clip, 0.25f);
+
         Vector3 currentPosition = transform.position;
         Vector3 destination = targetLocation + ((targetLocation) - currentPosition).normalized * 2f;
 
@@ -164,8 +177,10 @@ public class EvilHeadAI : Creature
         {
             StopCoroutine(chargeRoutine);
         }
-        audio_source.clip = telegraph_audio_clip;
-        audio_source.Play();
+       
+        //CHARGE SOUND
+        //audio_source.PlayOneShot(charge_audio_clip);
+
         ReenableMovement();
     }
 
@@ -173,7 +188,11 @@ public class EvilHeadAI : Creature
     {
         SetMovementSpeed(0f);
         //print(Time.realtimeSinceStartup + ": Explode");
-        HoverSoundEnd.Post(this.gameObject);
+        //HoverSoundEnd.Post(this.gameObject);
+
+        //STOP HOVER SOUND
+        audio_source.Stop();
+
         GameObject fx = (GameObject)Instantiate(deathFX, transform.position, Quaternion.identity);
         Destroy(fx, 5f);
 
@@ -187,9 +206,12 @@ public class EvilHeadAI : Creature
             }
             Destroy(keepOnDeath, 5f);
         }
-        PlayCreatureDeathSound();
-        audio_source.clip = death_audio_clip;
-        audio_source.Play();
+        //PlayCreatureDeathSound();
+
+        //DEATH SOUND
+       // audio_source.clip = death_audio_clip;
+        audio_source.PlayOneShot(death_audio_clip);
+       
         Destroy(gameObject);
     }
 
@@ -198,8 +220,10 @@ public class EvilHeadAI : Creature
     /// </summary>
     public void PlayBiteSound()
     {
-        BiteSound.Post(this.gameObject);
-        audio_source.clip = bite_audio_clip;
-        audio_source.Play();
+        //BiteSound.Post(this.gameObject);
+
+        //BITE SOUND
+        //audio_source.clip = bite_audio_clip;
+        audio_source.PlayOneShot(bite_audio_clip);
     }
 }
