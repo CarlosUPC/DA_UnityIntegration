@@ -33,7 +33,7 @@ public class MaterialChecker : MonoBehaviour
         }
     }
 
-    public void CheckMaterial(GameObject go)
+    public SoundMaterial.Materials CheckMaterial(GameObject go)
     {
         if (Physics.Raycast(trn.position + checkOffset, direction, out hit, layermask))
         {
@@ -41,9 +41,12 @@ public class MaterialChecker : MonoBehaviour
 
             if (sm != null)
             {
-                sm.material.SetValue(go);
+                // sm.material.SetValue(go);
+                return sm.material; // If a material sound is found, we retrieve it
             }
         }
+
+        return SoundMaterial.Materials.DIRT; //By default, it retrieve Dirt material sound
     }
 
     public AK.Wwise.Switch GetMaterial()
@@ -54,7 +57,7 @@ public class MaterialChecker : MonoBehaviour
 
             if (sm != null)
             {
-                return sm.material;
+                //return sm.material;
             }
         }
         return null;

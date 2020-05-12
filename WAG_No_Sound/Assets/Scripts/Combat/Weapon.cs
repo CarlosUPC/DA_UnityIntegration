@@ -193,14 +193,14 @@ public class Weapon : MonoBehaviour, IInteractable
                     if (sm != null) {
 
                         uint thisSwitch = 0;
-                        AkSoundEngine.GetSwitch((uint)sm.material.GroupId, transform.parent.gameObject, out thisSwitch);
+                        //AkSoundEngine.GetSwitch((uint)sm.material.GroupId, transform.parent.gameObject, out thisSwitch);
                         //print("Current Switch: "+ thisSwitch +", New: "+ sm.material.ID);
 
-                        if (thisSwitch != (uint)sm.material.Id)
-                        {
-                            sm.material.SetValue(transform.parent.gameObject); // Set Impact Material
-                                                                               //print("New Impact Material: "+ sm.gameObject.name);
-                        }
+                        //if (thisSwitch != (uint)sm.material.Id)
+                        //{
+                        //    sm.material.SetValue(transform.parent.gameObject); // Set Impact Material
+                        //                                                       //print("New Impact Material: "+ sm.gameObject.name);
+                        //}
                     }
 
                     SetAndPlayWeaponImpact(col.gameObject);

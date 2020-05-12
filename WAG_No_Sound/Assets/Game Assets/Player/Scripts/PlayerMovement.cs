@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     //Movement related variables
     private Vector3 movementVector;
     private float sprintAdd = 0;
-    private float runAmount = 0;
+    public float runAmount = 0;
 
     private float speedModifier = 1f;
 
