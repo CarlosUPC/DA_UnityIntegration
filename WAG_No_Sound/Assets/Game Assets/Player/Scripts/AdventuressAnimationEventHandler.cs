@@ -14,6 +14,25 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     public AK.Wwise.Event GetItem = new AK.Wwise.Event();
     public AK.Wwise.Trigger GetItemStinger = new AK.Wwise.Trigger();
 
+    [Header("Surface Sounds")]
+    public AudioClip[] dirtWalk;
+    public AudioClip[] dirtRun;
+    public AudioClip[] grassWalk;
+    public AudioClip[] grassRun;
+    public AudioClip[] rubbleWalk;
+    public AudioClip[] rubbleRun;
+    public AudioClip[] sandWalk;
+    public AudioClip[] sandRun;
+    public AudioClip[] stoneWalk;
+    public AudioClip[] stoneRun;
+    public AudioClip[] waterWalk;
+    public AudioClip[] waterRun;
+    public AudioClip[] woodWalk;
+    public AudioClip[] woodRun;
+
+
+
+
     [Header("Object Links")]
     [SerializeField]
     private Animator playerAnimator;
