@@ -113,8 +113,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
                     if (foot_L.FootstepSound.Validate())
                     { 
                         foot_L.PlayFootstepSound();
-                        audioSource.clip = footsteps;
-                        audioSource.Play();
+                        //audioSource.clip = footsteps;
+                        //audioSource.Play();
                         particlePosition = foot_L.transform.position;
                         FootstepParticles(particlePosition);
                     }
@@ -124,8 +124,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
                     if (foot_R.FootstepSound.Validate())
                     {
                         foot_R.PlayFootstepSound();
-                        audioSource.clip = footsteps;
-                        audioSource.Play();
+                        //audioSource.clip = footsteps;
+                        //audioSource.Play();
                         particlePosition = foot_R.transform.position;
                         FootstepParticles(particlePosition);
                     }

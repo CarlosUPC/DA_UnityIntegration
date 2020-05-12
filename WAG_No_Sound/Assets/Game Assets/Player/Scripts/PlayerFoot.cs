@@ -19,12 +19,20 @@ public class PlayerFoot : MonoBehaviour
 
     public void PlayFootstepSound()
     {
-        if (!inWater)
-        {
-            materialChecker.CheckMaterial(gameObject); //This also sets the material if a SoundMaterial is found!
-        }
+        //if (!inWater)
+        //{
+        //    materialChecker.CheckMaterial(gameObject); //This also sets the material if a SoundMaterial is found!
+        //}
 
-        FootstepSound.Post(gameObject);
+        //FootstepSound.Post(gameObject);
+
+        AudioSource source = GetComponent<AudioSource>();
+        source.clip = RandomizeFootstepSound();
+        source.Play();
+
+        //source.PlayOneShot(RandomizeFootstepSound());
+
+       
     }
 
     public void EnterWaterZone()
@@ -35,6 +43,15 @@ public class PlayerFoot : MonoBehaviour
     public void ExitWaterZone()
     {
         inWater = false;
+    }
+
+    public AudioClip RandomizeFootstepSound()
+    {
+        AudioClip[] soundBank;
+        soundBank = GameObject.FindGameObjectWithTag("Player").GetComponent<AdventuressAnimationEventHandler>().dirtWalk;
+
+        int clip = Random.Range(0, soundBank.Length);
+        return soundBank[clip];
     }
 
 }
