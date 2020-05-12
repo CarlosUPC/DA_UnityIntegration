@@ -30,8 +30,8 @@ public class PlayerFoot : MonoBehaviour
         AudioClip[] tmp = GetAudioBankFromMaterialSound(mat);
         
         AudioSource source = GetComponent<AudioSource>();
-        source.clip = RandomizeFootstepSound(tmp);
-        source.Play();
+        //source.clip = RandomizeFootstepSound(tmp);
+        source.PlayOneShot(RandomizeFootstepSound(tmp), 1.0f * PlayerManager.Instance.player.GetComponent<PlayerMovement>().runAmount);
 
         //source.PlayOneShot(RandomizeFootstepSound());
     }

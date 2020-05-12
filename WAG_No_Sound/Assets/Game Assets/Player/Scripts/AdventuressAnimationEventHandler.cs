@@ -39,6 +39,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
 
     [SerializeField]
     private GameObject runParticles;
+    [SerializeField]
+    private GameObject runParticlesSprint;
 
     private PlayerFoot foot_L;
     private PlayerFoot foot_R;
@@ -46,6 +48,7 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     public AudioClip swing_audio_clip;
     public AudioClip get_item_audio_clip;
     AudioSource audioSource;
+
 
     #region private variables
     private bool hasPausedMovement;
@@ -58,6 +61,8 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
         GameObject L = GameObject.Find("toe_left");
         GameObject R = GameObject.Find("toe_right");
         audioSource = GetComponent<AudioSource>();
+
+       
 
         if (L != null)
         {
@@ -135,10 +140,23 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     }
 
     void FootstepParticles(Vector3 particlePosition) {
-        GameObject p = Instantiate(runParticles, particlePosition + Vector3.up * 0.1f, Quaternion.identity) as GameObject;
-        p.transform.parent = SceneStructure.Instance.TemporaryInstantiations.transform;
-        Destroy(p, 5f);
-        StartCoroutine(FootstepCooldown());
+
+        if (PlayerManager.Instance.isSprinting)
+        {
+       
+            GameObject p = Instantiate(runParticlesSprint, particlePosition + -Vector3.forward * 0.1f, Quaternion.identity) as GameObject;
+            p.transform.parent = SceneStructure.Instance.TemporaryInstantiations.transform;
+            Destroy(p, 5.0f);
+            StartCoroutine(FootstepCooldown());
+        }
+        else
+        {
+           GameObject p = Instantiate(runParticles, particlePosition + Vector3.up * 0.1f, Quaternion.identity) as GameObject;
+           p.transform.parent = SceneStructure.Instance.TemporaryInstantiations.transform;
+           Destroy(p, 5.0f);
+           StartCoroutine(FootstepCooldown());
+        }
+
     }
 
     IEnumerator FootstepCooldown()
