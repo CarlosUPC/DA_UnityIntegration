@@ -9,9 +9,6 @@ using UnityEngine.AI;
 
 public class WwizardAI : Creature
 {
-    AudioSource audio_source;
-    public AudioClip audio_clip_staff;
-    public AudioClip audio_clip_poof;
     [Header("Wwise")]
     public AK.Wwise.Event PoofGimmickSound;
     public AK.Wwise.Event StaffHitGroundSound;
@@ -28,6 +25,11 @@ public class WwizardAI : Creature
     [Header("NavMesh Stuff")]
     public NavMeshAgent navMeshAgent;
     public NavMeshObstacle navMeshObstacle;
+
+    [Header("Sounds")]
+    public AudioClip audio_clip_gimmick;
+    public AudioClip audio_clip_staff;
+    AudioSource audio_source;
 
     #region private variables
     //Cached animator hashes
@@ -64,9 +66,11 @@ public class WwizardAI : Creature
         if (Gimmick1PoofParticles != null && Gimmick1PoofTransform != null)
         {
             GameObject p = Instantiate(Gimmick1PoofParticles, Gimmick1PoofTransform.transform.position + Gimmick1Displacement, Quaternion.identity) as GameObject;
-            PoofGimmickSound.Post(p);
-            audio_source.clip = audio_clip_poof;
-            audio_source.Play();
+            //  PoofGimmickSound.Post(p);
+
+            // ------- GIMMICK SOUND ------- //
+            audio_source.PlayOneShot(audio_clip_gimmick);
+           
             Destroy(p, 5f);
         }
     }
@@ -105,8 +109,9 @@ public class WwizardAI : Creature
     public void PlayStaffSound()
     {
         matChecker.CheckMaterial(gameObject);
-        StaffHitGroundSound.Post(gameObject);
-        audio_source.clip = audio_clip_staff;
-        audio_source.Play();
+        //StaffHitGroundSound.Post(gameObject);
+
+        // ------- STAFF SOUND -------- //
+        audio_source.PlayOneShot(audio_clip_staff);
     }
 }
