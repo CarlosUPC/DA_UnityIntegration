@@ -4763,8 +4763,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10234c3d4fb144c0b9eee30861988b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_impact_audio_clip: {fileID: 8300000, guid: 8ea6a4c8087514e4b85223a18e999e10,
-    type: 3}
   ContinuousSoundStart:
     idInternal: 812304580
     valueGuidInternal: 570653cb26ac434ab468b24503eb2ed9
@@ -4782,6 +4780,10 @@ MonoBehaviour:
   speed: 20
   duration: 1
   damage: 40
+  music_audio_clip: {fileID: 8300000, guid: 7b98ffc0897cbc84ba2d866615bb6a98, type: 3}
+  hit_impact_audio_clip: {fileID: 8300000, guid: 8ea6a4c8087514e4b85223a18e999e10,
+    type: 3}
+  miss_hit_audio_clip: {fileID: 8300000, guid: 63893fa6483fe0245881775695068a91, type: 3}
   ignoreCollisionWithWwizard: 0
   parent: {fileID: 0}
   ImpactSound:

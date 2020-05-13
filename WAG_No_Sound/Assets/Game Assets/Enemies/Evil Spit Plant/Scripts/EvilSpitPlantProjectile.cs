@@ -10,8 +10,6 @@ using System.Collections.Generic;
 
 public class EvilSpitPlantProjectile : MonoBehaviour
 {
-    AudioSource audio_source;
-    public AudioClip hit_impact_audio_clip;
     [Header("Wwise")]
     public AK.Wwise.Event ContinuousSoundStart;
     public AK.Wwise.Event ContinuousSoundStop;
@@ -24,6 +22,12 @@ public class EvilSpitPlantProjectile : MonoBehaviour
     public float speed = 5;
     public float duration = 3;
     public float damage = 40f;
+
+    [Header("Projectile Sounds:")]
+    public AudioClip music_audio_clip;
+    public AudioClip hit_impact_audio_clip;
+    public AudioClip miss_hit_audio_clip;
+    AudioSource audio_source;
 
     public bool ignoreCollisionWithWwizard = false;
 
@@ -60,7 +64,16 @@ public class EvilSpitPlantProjectile : MonoBehaviour
 
     IEnumerator MoveSpitBullet()
     {
-        ContinuousSoundStart.Post(gameObject);
+        //ContinuousSoundStart.Post(gameObject);
+
+        // ------ START MUSIC SOUND ------- //
+        if(audio_source.isPlaying==false)
+        {
+            audio_source.clip = music_audio_clip;
+            audio_source.Play();
+            audio_source.loop = true;
+        }
+
         while (time < duration)
         {
             rb.velocity = transform.forward * speed;
@@ -132,7 +145,14 @@ public class EvilSpitPlantProjectile : MonoBehaviour
         {
             isExploding = true;
 
-            ContinuousSoundStop.Post(gameObject);
+            //ContinuousSoundStop.Post(gameObject);
+
+            // ---------- STOP MUSIC SOUND --------- //
+            if(audio_source.clip == music_audio_clip)
+            {
+                audio_source.Stop();
+            }
+            audio_source.loop = false;
 
             GetComponent<Collider>().enabled = false;
             time = duration;
@@ -143,14 +163,18 @@ public class EvilSpitPlantProjectile : MonoBehaviour
 
             if (hitSomething)
             {
-                ImpactSound.Post(go.gameObject);
-                audio_source.clip = hit_impact_audio_clip;
-                audio_source.Play();
+                // ImpactSound.Post(go.gameObject);
+
+                // ------ HIT SOUND ------ //
+                audio_source.PlayOneShot(hit_impact_audio_clip);
+               
             }
             else
             {
-                NoImpactSound.Post(go.gameObject);
+                //NoImpactSound.Post(go.gameObject);
 
+                // ------ MISS HIT SOUND ------ //
+                audio_source.PlayOneShot(miss_hit_audio_clip);
             }
 
             Destroy(go, 5f);

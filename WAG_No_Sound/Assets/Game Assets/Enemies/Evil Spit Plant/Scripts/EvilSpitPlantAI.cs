@@ -9,17 +9,13 @@ using System.Collections;
 
 public class EvilSpitPlantAI : Creature
 {
-    public AudioClip shoot_audio_clip;
-    public AudioClip charge_audio_clip;
-    public AudioClip death_audio_clip;
-    public AudioClip hurt_audio_clip;
-    AudioSource audio_source;
+   
     [Header("Custom Creature Options:")]
     public GameObject bulletPrefab;
     public GameObject chargeParticles;
     public GameObject shootParticles;
     public GameObject spitBulletSpawnPoint;
-    public AudioSource audioSource;
+    //public AudioSource audioSource;
 
     #region private variables
     private bool hasSpawned = false;
@@ -35,6 +31,15 @@ public class EvilSpitPlantAI : Creature
     public AK.Wwise.Event Death_Headfall = new AK.Wwise.Event();
     public AK.Wwise.Event asdasdasfasda;
 
+
+    [Header("Sounds")]
+    public AudioClip shoot_audio_clip;
+    public AudioClip charge_audio_clip;
+    public AudioClip death_audio_clip;
+    public AudioClip hurt_audio_clip;
+    AudioSource audio_source;
+
+
     private void Awake()
     {
         audio_source = GetComponent<AudioSource>();
@@ -48,6 +53,8 @@ public class EvilSpitPlantAI : Creature
         {
             anim.SetTrigger(spawnHash);
             hasSpawned = true;
+
+            audio_source.spatialBlend = 1.0f;
         }
     }
 
@@ -69,9 +76,11 @@ public class EvilSpitPlantAI : Creature
     {
         if (targetOfNPC != null && !GameManager.Instance.AIPaused)
         {
-            AttackSound.Post(this.gameObject);
-            audio_source.clip = shoot_audio_clip;
-            audio_source.Play();
+            //AttackSound.Post(this.gameObject);
+           
+            //--------- SHOOT SOUND -------- //
+            audio_source.PlayOneShot(shoot_audio_clip);
+
             GameObject bullet = Instantiate(bulletPrefab, spitBulletSpawnPoint.transform.position, Quaternion.LookRotation(transform.forward)) as GameObject; //TODO: Pool spitbullets
             bullet.GetComponent<EvilSpitPlantProjectile>().parent = gameObject;
             bullet.GetComponent<EvilSpitPlantProjectile>().damage = this.AttackDamage;
@@ -83,9 +92,10 @@ public class EvilSpitPlantAI : Creature
 
     public void PlayChargeSound()
     {
-        audio_source.clip = charge_audio_clip;
-        audio_source.Play();
-        ChargeSound.Post(gameObject);
+       // -------- CHARGE SOUND -------- //
+       audio_source.PlayOneShot(charge_audio_clip);
+
+       // ChargeSound.Post(gameObject);
     }
 
     /// <summary>
@@ -112,9 +122,10 @@ public class EvilSpitPlantAI : Creature
     public override void OnDamageReset()
     {
         base.OnDamageReset();
-        audio_source.clip = hurt_audio_clip;
-        audio_source.Play();
         lockRotation = false;
+
+        // ------- HURT SOUND -------- //
+        audio_source.PlayOneShot(hurt_audio_clip);
     }
 
     /// <summary>
@@ -153,8 +164,10 @@ public class EvilSpitPlantAI : Creature
 
     public void OnDeathHeadFall()
     {
-        audio_source.clip = death_audio_clip;
-        audio_source.Play();
-        Death_Headfall.Post(this.gameObject);
+        //--------- DEATH SOUND --------- //
+        audio_source.spatialBlend = 0.5f;
+        audio_source.PlayOneShot(death_audio_clip);
+       
+       //Death_Headfall.Post(this.gameObject);
     }
 }
