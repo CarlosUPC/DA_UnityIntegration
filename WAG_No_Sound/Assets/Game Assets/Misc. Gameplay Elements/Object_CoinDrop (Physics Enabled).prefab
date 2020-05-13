@@ -14243,6 +14243,8 @@ MonoBehaviour:
     valueGuidInternal: d1818cc6179d7f4c8356964f200dde92
     WwiseObjectReference: {fileID: 11400000, guid: 4a12b4c7bb4aa2a438087ddcea4392b7,
       type: 2}
+  pick_coin_sound: {fileID: 8300000, guid: e935036b6f18c64439d16677b6398334, type: 3}
+  drop_sound: {fileID: 8300000, guid: a026ce459caa15e4b9e9ec48661de89e, type: 3}
 --- !u!135 &135441306344924428
 SphereCollider:
   m_ObjectHideFlags: 0

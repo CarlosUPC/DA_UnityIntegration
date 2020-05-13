@@ -10,8 +10,6 @@ using System.Collections.Generic;
 
 public class DefaultSpellcraft : MonoBehaviour
 {
-    AudioSource audio_source;
-    public AudioClip arcane_blast_sfx;
     [System.Serializable]
 
     public class ChargeInfo
@@ -39,7 +37,13 @@ public class DefaultSpellcraft : MonoBehaviour
     public List<SpellDesigns> Spellcraft;
 
     public int SpellSelect = 0;
+    private float StartVolume = 0.0f;
 
+    [Header("Sounds")]
+    AudioSource audio_source;
+    public AudioClip spell_cast_audio_clip;
+    public AudioClip spell_charge_end;
+    public AudioClip spell_charge_loop;
 
     [Header("WWISE")]
     public AK.Wwise.Event SpellCast = new AK.Wwise.Event();
@@ -98,7 +102,12 @@ public class DefaultSpellcraft : MonoBehaviour
             }
 
             // SPELL SOUND
-            SpellChargeStart.Post(gameObject);
+            //SpellChargeStart.Post(gameObject);
+            audio_source = transform.parent.gameObject.GetComponent<AudioSource>();
+            StartVolume = audio_source.volume;
+            audio_source.volume = 0.0f;
+            audio_source.loop = true;
+            audio_source.PlayOneShot(spell_charge_loop);
             startRotation = transform.rotation;
         }
     }
@@ -159,12 +168,24 @@ public class DefaultSpellcraft : MonoBehaviour
     {
         Spellcraft[SpellSelect].Charge.ChargeAmount = charge;
         SpellChargeLevel.SetGlobalValue(Spellcraft[SpellSelect].Charge.ChargeAmount * 100);
+
+        audio_source = transform.parent.gameObject.GetComponent<AudioSource>();
+        if (charge > 0.0f && audio_source.loop) //Check that it is charging
+        {
+            audio_source.volume = StartVolume * charge;
+        }
     }
 
     void OffCharge()
     {
         PlayerManager.Instance.ResumeAttacking(this.gameObject);
         PlayerManager.Instance.ResumeMovement(this.gameObject);
+
+        audio_source = transform.parent.gameObject.GetComponent<AudioSource>();
+        audio_source.volume = StartVolume;
+        audio_source.loop = false;
+        audio_source.Stop();
+
         if (Spellcraft[SpellSelect].IsAvailable)
         {
             PlayerManager.Instance.playerAnimator.ResetTrigger(chargeMagicHash);
@@ -173,7 +194,9 @@ public class DefaultSpellcraft : MonoBehaviour
 
             if (PlayerManager.Instance.playerAnimator.GetBool(canShootMagicHash))
             {
-                SpellChargeStop.Post(gameObject);
+                //SpellChargeStop.Post(gameObject);
+                audio_source.PlayOneShot(spell_charge_end);
+
                 // Activate Spells
                 PlayerManager.Instance.playerAnimator.SetBool(canShootMagicHash, false);
                 for (int R = 0; R < Spellcraft[SpellSelect].Release.OnRelease.Count; R++)
@@ -185,9 +208,10 @@ public class DefaultSpellcraft : MonoBehaviour
 
                     // SPELL SOUND
                     SpellChargeLevel.SetGlobalValue(Spellcraft[SpellSelect].Charge.ChargeAmount * 100);
-                    SpellCast.Post(this.gameObject);
-                    audio_source.clip = arcane_blast_sfx;
-                    audio_source.Play();
+                    //SpellCast.Post(this.gameObject);
+
+                    // -------- SPELL SOUND ----------- //
+                    audio_source.PlayOneShot(spell_cast_audio_clip);
                 }
             }
         }
