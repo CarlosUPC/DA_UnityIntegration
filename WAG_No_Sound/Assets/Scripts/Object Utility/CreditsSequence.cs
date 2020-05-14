@@ -36,6 +36,9 @@ public class CreditsSequence : MonoBehaviour
     private readonly int fadeOutHash = Animator.StringToHash("FadeOut");
     #endregion
 
+    [SerializeField]
+    private AudioSource audio_source;
+
     private void Awake()
     {
         SoundBank.Load(false, false);
@@ -55,7 +58,8 @@ public class CreditsSequence : MonoBehaviour
         canvAnim = FadeCanvas.GetComponent<Animator>();
 
         StartCoroutine(CreditsCameraSequence());
-        MusicEvent.Post(gameObject);
+        //MusicEvent.Post(gameObject);
+        audio_source.Play();
     }
 
     IEnumerator CreditsCameraSequence()
@@ -112,6 +116,7 @@ public class CreditsSequence : MonoBehaviour
 
     public void SkipCredits()
     {
+        StartCoroutine(FadeAudioSource.StartFade(audio_source, 2.0f, 0.0f));
         canvAnim.speed = 5f;
         canvAnim.SetTrigger(fadeOutHash);
     }
