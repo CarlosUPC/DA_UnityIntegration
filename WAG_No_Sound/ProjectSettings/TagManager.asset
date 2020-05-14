@@ -17,6 +17,8 @@ TagManager:
   - PlayerHead
   - TeleportDestination
   - Wwizard
+  - MusicZones
+  - BankZones
   layers:
   - Default
   - TransparentFX

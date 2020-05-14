@@ -342,7 +342,7 @@ public class PlayerManager : Singleton<PlayerManager>
     IEnumerator RespawnSequence()
     {
         isAlive = false;
-        Death.Post(GetComponent<GameManager>().MusicGameObject);
+        //Death.Post(GetComponent<GameManager>().MusicGameObject);
 
         UI_Overlayers.Instance.FadeLayer(true, 6.0f);
 

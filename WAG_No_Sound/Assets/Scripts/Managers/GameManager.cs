@@ -70,14 +70,20 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     [HideInInspector]
-    public GameObject MusicGameObject;
+    //public GameObject MusicGameObject;
+    AudioSource bank_audio_source;
+    AudioSource music_audio_source;
+
+    public AudioClip day_audio_clip;
+    public AudioClip night_audio_clip;
+    public AudioClip mix_audio_clip;
 
     [Header("CHEATS")]
     public bool BigHeadMode;
     public bool AIPaused;
     [Header("MODES")]
     public bool DisableWwizardMagicStateOnStart = true;
-
+    private bool fadeOut = false;
     /// <summary>
     /// Used with dynamic bools from UnityEvents on the UI
     /// </summary>
@@ -111,14 +117,26 @@ public class GameManager : Singleton<GameManager>
         if (DisableWwizardMagicStateOnStart) {
             AkSoundEngine.SetState("MagicZone", "Outside");
         }
-        
-        MusicGameObject = GameObject.Find("Ak_PlayMusic");
+
+        // MusicGameObject = GameObject.Find("Ak_PlayMusic");
+      
+        //Bank Regions
+        bank_audio_source = GameObject.FindGameObjectWithTag("BankZones").GetComponent<AudioSource>();
+        bank_audio_source.loop = true;
+
+        //Music Zones
+        music_audio_source = GameObject.FindGameObjectWithTag("MusicZones").GetComponent<AudioSource>();
+        music_audio_source.loop = true;
+
+        //Setting audio clips
+        UpdateMusic();
+
         DayNightCall += dayNightPush;
         MusicStart_Region.SetValue();
 
         AkCallbackType CallbackType = AkCallbackType.AK_MusicSyncUserCue;
         MusicEvent.Post(gameObject, (uint)CallbackType, CallBackFunction);
-
+       
         StartCoroutine(DistanceToEnemies());
         EnemyMusicEvent.Post(this.gameObject);
     }
@@ -220,26 +238,102 @@ public class GameManager : Singleton<GameManager>
 
     public void LeaveZone(ZoneTrigger Z)
     {
-        CurrentZones.Remove(Z);
-        UpdateMusic();
+        //CurrentZones.Remove(Z);
+        //UpdateMusic();
+        StartCoroutine("FadeOut", Z);
     }
 
     public void EnterZone(ZoneTrigger Z)
     {
-        CurrentZones.Insert(0, Z);
-        UpdateMusic();
+        //CurrentZones.Insert(0, Z);
+        //UpdateMusic();
+        StartCoroutine("FadeIn", Z);
     }
 
+    IEnumerator FadeOut(ZoneTrigger Z)
+    {
+        float startTime = Time.time;
+        while (true)
+        {
+            fadeOut = true;
+            float elapsed = Time.time - startTime;
+
+            music_audio_source.volume = Mathf.Clamp01(Mathf.Lerp(music_audio_source.volume, 0, elapsed / 5.0f));
+
+            if (music_audio_source.volume == 0)
+            {
+                fadeOut = false;
+                CurrentZones.Remove(Z);
+                UpdateMusic();
+                break;
+            }
+
+            yield return null;
+        }
+
+    }
+
+    IEnumerator FadeIn(ZoneTrigger Z)
+    {
+        yield return new WaitUntil(() => music_audio_source.volume == 0);
+
+        CurrentZones.Insert(0, Z);
+        UpdateMusic();
+        float startTime = Time.time;
+
+        while (true)
+        {
+            float elapsed = Time.time - startTime;
+
+            music_audio_source.volume = Mathf.Clamp01(Mathf.Lerp(0.0f, 0.5f, elapsed / 5.0f));
+
+            if (music_audio_source.volume == 0.5f)
+            {
+
+                break;
+            }
+
+            yield return null;
+        }
+
+    }
     void UpdateMusic()
     {
         if (CurrentZones.Count > 0)
         {
-            CurrentZones[0].MusicState.SetValue();
+            //CurrentZones[0].MusicState.SetValue();
+            if (dayTime)
+            {
+                bank_audio_source.clip = CurrentZones[0].day_music_clip;
+                music_audio_source.clip = CurrentZones[0].day_mix_clip;
+            }
+            else
+            {
+                bank_audio_source.clip = CurrentZones[0].night_music_clip;
+                music_audio_source.clip = CurrentZones[0].night_mix_clip;
+            }
         }
         else
         {
-            MusicStart_Region.SetValue();
+
+            if (dayTime)
+            {
+                bank_audio_source.clip = day_audio_clip;
+            }
+            else
+            {
+                bank_audio_source.clip = night_audio_clip;
+            }
+
+            music_audio_source.clip = mix_audio_clip;
+            //MusicStart_Region.SetValue();
         }
+
+        bank_audio_source.Play();
+        bank_audio_source.loop = true;
+
+        music_audio_source.Play();
+        music_audio_source.loop = true;
     }
 
     bool CanPostEnemyMusic = true;
