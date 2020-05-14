@@ -30,8 +30,27 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     public AudioClip[] woodWalk;
     public AudioClip[] woodRun;
 
+    [Header("Object Pickup Sounds")]
+    public AudioClip book;
+    public AudioClip evilEssence;
+    public AudioClip mushroom;
+    public AudioClip crystalShard;
+    public AudioClip pinecone;
+    public AudioClip key;
+    public AudioClip scroll;
+    //public AudioClip swing1;
+    //public AudioClip swing2;
+    //public AudioClip swing3;
 
+    [Header("Weapon Pickup Sounds")]
+    public AudioClip sword;
+    public AudioClip axe;
+    public AudioClip pickaxe;
+    public AudioClip hammer;
 
+    [Header("Weapon Attack Sounds")]
+    public AudioClip swing_audio_clip;
+    AudioSource audioSource;
 
     [Header("Object Links")]
     [SerializeField]
@@ -44,10 +63,9 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
 
     private PlayerFoot foot_L;
     private PlayerFoot foot_R;
-    public AudioClip footsteps;
-    public AudioClip swing_audio_clip;
-    public AudioClip get_item_audio_clip;
-    AudioSource audioSource;
+
+   // public AudioClip footsteps;
+    //public AudioClip get_item_audio_clip;
 
 
     #region private variables
@@ -227,10 +245,30 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     public void PickUpItem()
     {
         PlayerManager.Instance.PickUpEvent();
-        GetItem.Post(this.gameObject);
-        audioSource.clip = get_item_audio_clip;
-        audioSource.Play();
-        GetItemStinger.Post(GameManager.Instance.MusicGameObject);
+        //GetItem.Post(this.gameObject);
+        //audioSource.clip = get_item_audio_clip;
+        //audioSource.Play();
+        //GetItemStinger.Post(GameManager.Instance.MusicGameObject);
+
+        AudioSource audio_source = GetComponent<AudioSource>();
+        Weapon player_weapon = PlayerManager.Instance.equippedWeaponInfo;
+
+        switch (player_weapon.weaponType)
+        {
+            case WeaponTypes.Sword:
+                audio_source.PlayOneShot(sword, 0.2f);
+                break;
+            case WeaponTypes.Axe:
+                audio_source.PlayOneShot(axe, 0.2f);
+                break;
+            case WeaponTypes.PickAxe:
+                audio_source.PlayOneShot(pickaxe, 0.2f);
+                break;
+            case WeaponTypes.Hammer:
+                audio_source.PlayOneShot(hammer, 0.2f);
+                break;
+        }
+
     }
 
     public void WeaponSound()

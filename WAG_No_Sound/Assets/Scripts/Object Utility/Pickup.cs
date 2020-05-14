@@ -7,6 +7,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using QuestSystem;
 
 public class Pickup : MonoBehaviour, IInteractable
 {
@@ -39,10 +40,12 @@ public class Pickup : MonoBehaviour, IInteractable
 	private bool inConversation = false;
 	private bool isFocus = false;
 	private ObjectOutline objectOutline;
-	#endregion
+    #endregion
 
-	//Events
-	public UnityEvent OnBecameFocus;
+    ItemType type;
+
+    //Events
+    public UnityEvent OnBecameFocus;
 	public UnityEvent OnInteraction;
 
 	void Start()
@@ -192,11 +195,53 @@ public class Pickup : MonoBehaviour, IInteractable
 
 			if (interactionSound)
 			{
-				
-				PickUpEvent.Post(gameObject);
-				audio_source.clip = pick_up_sound;
-				audio_source.Play();
-			}
+
+                //PickUpEvent.Post(gameObject);
+                //audio_source.clip = pick_up_sound;
+                //audio_source.Play();
+
+                AdventuressAnimationEventHandler pickup = GameObject.FindGameObjectWithTag("Player").GetComponent<AdventuressAnimationEventHandler>();
+                AudioSource audio_source = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+
+                switch (type)
+                {
+                    case ItemType.Book:
+                        audio_source.PlayOneShot(pickup.book, 0.3f);
+                        break;
+                    case ItemType.EvilEssence:
+                        audio_source.PlayOneShot(pickup.evilEssence, 0.1f);
+                        break;
+                    case ItemType.Mushroom:
+                        audio_source.PlayOneShot(pickup.mushroom, 0.3f);
+                        break;
+                    case ItemType.CrystalShard:
+                        audio_source.PlayOneShot(pickup.crystalShard, 0.3f);
+                        break;
+                    case ItemType.Pinecone:
+                        audio_source.PlayOneShot(pickup.pinecone, 0.3f);
+                        break;
+                    case ItemType.Key:
+                        audio_source.PlayOneShot(pickup.key, 0.3f);
+                        break;
+                    case ItemType.Scroll:
+                        audio_source.PlayOneShot(pickup.scroll, 0.3f);
+                        break;
+                    case ItemType.Sword:
+                        audio_source.PlayOneShot(pickup.sword, 0.3f);
+                        break;
+                    case ItemType.Hammer:
+                        audio_source.PlayOneShot(pickup.hammer, 0.3f);
+                        break;
+                    case ItemType.Axe:
+                        audio_source.PlayOneShot(pickup.axe, 0.3f);
+                        break;
+                    case ItemType.Pickaxe:
+                        audio_source.PlayOneShot(pickup.pickaxe, 0.3f);
+                        break;
+                    default:
+                        break;
+                }
+            }
 			if (pickupParticles != null)
 			{
 				GameObject p = Instantiate(pickupParticles, transform.position, Quaternion.identity) as GameObject;
