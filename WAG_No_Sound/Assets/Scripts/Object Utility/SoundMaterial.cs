@@ -19,7 +19,9 @@ public class SoundMaterial : MonoBehaviour
         SAND,
         STONE,
         WATER,
-        WOOD
+        WOOD,
+        LEAVES,
+        CRATE
     }
 
     public Materials material;

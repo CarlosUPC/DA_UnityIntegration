@@ -234,8 +234,8 @@ public class Weapon : MonoBehaviour, IInteractable
                 GameManager.DamageObject(col.gameObject, attack);
                 WeaponTypeSwitch.SetValue(transform.parent.gameObject); // Weapon Type
                 WeaponImpact.Post(transform.parent.gameObject);
-                audio_source.clip = weapon_impact_sound;
-                audio_source.Play();
+                //audio_source.clip = weapon_impact_sound;
+                //audio_source.Play();
             }
         }
     }
@@ -243,9 +243,20 @@ public class Weapon : MonoBehaviour, IInteractable
         //print("Impact");
         //WeaponTypeSwitch.SetValue(transform.parent.gameObject); // Weapon Type
         alreadyHitObjects.Add(HitObj);
-        WeaponImpact.Post(transform.parent.gameObject);
-        audio_source.clip = weapon_hit_sound;
-        audio_source.Play();
+        //WeaponImpact.Post(transform.parent.gameObject);
+        //audio_source.clip = weapon_hit_sound;
+        //audio_source.Play();
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<AdventuressAnimationEventHandler>().WeaponSound();
+
+
+    }
+
+    public GameObject LastObjectHit()
+    {
+        if (alreadyHitObjects.Count > 0)
+            return alreadyHitObjects[alreadyHitObjects.Count - 1];
+        return null;
     }
 
 }

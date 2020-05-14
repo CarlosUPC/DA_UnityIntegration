@@ -9,6 +9,14 @@ using System.Collections;
 
 public class AdventuressAnimationEventHandler : MonoBehaviour
 {
+    [System.Serializable]
+    public struct WeaponHit
+    {
+        public WeaponTypes weapon;
+        public SoundMaterial.Materials material;
+        public AudioClip clip;
+    }
+
     [Header("Wwise")]
     public AK.Wwise.Event Swing = new AK.Wwise.Event();
     public AK.Wwise.Event GetItem = new AK.Wwise.Event();
@@ -51,6 +59,10 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
     [Header("Weapon Attack Sounds")]
     public AudioClip swing_audio_clip;
     AudioSource audioSource;
+
+    [Header("Weapon Attack Material Sounds")]
+    public WeaponHit[] weapon_hit;
+
 
     [Header("Object Links")]
     [SerializeField]
@@ -273,7 +285,32 @@ public class AdventuressAnimationEventHandler : MonoBehaviour
 
     public void WeaponSound()
     {
+        AudioSource audio_source = GetComponent<AudioSource>();
         Weapon EquippedWeapon = PlayerManager.Instance.equippedWeaponInfo;
-        EquippedWeapon.WeaponImpact.Post(EquippedWeapon.transform.parent.gameObject);
+        SoundMaterial.Materials mat = SoundMaterial.Materials.DIRT;
+        //EquippedWeapon.WeaponImpact.Post(EquippedWeapon.transform.parent.gameObject);
+
+        if (EquippedWeapon.LastObjectHit() && EquippedWeapon.LastObjectHit().GetComponent<SoundMaterial>())
+            mat = EquippedWeapon.LastObjectHit().GetComponent<SoundMaterial>().material;
+
+        audio_source.PlayOneShot(RetrieveImpactSound(EquippedWeapon.weaponType, mat), 0.05f);
+
+    }
+
+    public AudioClip RetrieveImpactSound(WeaponTypes weapon, SoundMaterial.Materials material)
+    {
+        foreach (WeaponHit element in weapon_hit)
+        {
+            if (element.weapon == weapon && element.material == material)
+                return element.clip;
+        }
+
+        foreach (WeaponHit element in weapon_hit) //If not found return DIRT impact
+        {
+            if (element.weapon == weapon && element.material == SoundMaterial.Materials.DIRT)
+                return element.clip;
+        }
+
+        return null;
     }
 }
