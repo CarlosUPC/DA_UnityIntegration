@@ -13,6 +13,7 @@ using System.Linq;
 
 public class WorldTeleporter : MonoBehaviour
 {
+    
     //TODO: Custom inspector with EditorGUI.HelpBox("Tag all teleport destinations with the tag 'TeleportDestination'");
     private TeleportDestination[] destinations;
     
@@ -25,7 +26,7 @@ public class WorldTeleporter : MonoBehaviour
     public string destinationKeyPrefix = "dropdown_";
 
     [Header("SFX")]
-    AudioSource tpAudio;
+    AudioSource teleport_audio;
 
     [Header("VFX")]
     public GameObject teleportParticles;
@@ -36,7 +37,7 @@ public class WorldTeleporter : MonoBehaviour
     private void Awake()
     {
         LanguageManager.OnLanguageChange += ConfigureTeleportLocations;
-        tpAudio = GetComponent<AudioSource>();
+        teleport_audio = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -79,11 +80,11 @@ public class WorldTeleporter : MonoBehaviour
     public void Teleport()
     {
         dropdown.Hide();
-        tpAudio.Play();
         if (dropdown.value != 0)
         {
             PlayerManager.Instance.player.transform.position = destinations[dropdown.value - 1].transform.position;
-            TeleportSelectSound.Post(PlayerManager.Instance.player);
+            //TeleportSelectSound.Post(PlayerManager.Instance.player);
+            teleport_audio.Play();
             dropdown.value = 0;
             dropdown.captionText.text = LanguageManager.GetText("menu_teleport");
 
