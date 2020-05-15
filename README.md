@@ -55,6 +55,6 @@ Core)
 
 ### 5. Achieve the final control over Allegro’s Kingdom
 
-- [ ] **Main goal**: Create a mixer and add functionality to the music and general audio sliders in the
+- [x] **Main goal**: Create a mixer and add functionality to the music and general audio sliders in the
 options screen
-- [ ] Secondary goal level HERO: create an appropriate mixer hierarchy
+- [x] Secondary goal level HERO: create an appropriate mixer hierarchy
