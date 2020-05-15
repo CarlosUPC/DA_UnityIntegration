@@ -64,8 +64,8 @@ public class Menu : MonoBehaviour
             isOpen = menuOpen;
             if (menuOpen)
             {
-                MenuOpenSound.Post(gameObject);
-                MenuRTPC.SetGlobalValue(100f);
+                //MenuOpenSound.Post(gameObject);
+                //MenuRTPC.SetGlobalValue(100f);
                 audio_source.PlayOneShot(open_clip, 0.7F);
                 GameManager.Instance.gameSpeedHandler.PauseGameSpeed(gameObject.GetInstanceID());
                 GameManager.Instance.BlurCam();
@@ -77,9 +77,9 @@ public class Menu : MonoBehaviour
             }
             else
             {
-                MenuCloseSound.Post(gameObject);
+                //MenuCloseSound.Post(gameObject);
+                //MenuRTPC.SetGlobalValue(0f);
                 audio_source.PlayOneShot(close_clip, 0.7F);
-                MenuRTPC.SetGlobalValue(0f);
                 GameManager.Instance.gameSpeedHandler.UnPauseGameSpeed(gameObject.GetInstanceID());
                 GameManager.Instance.UnBlurCam();
                 QuestBox.DisableObject(0.25f);
