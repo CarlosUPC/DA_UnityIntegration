@@ -10,13 +10,13 @@ Digital Audio Unity Integration
 
 ### 1. Bring the silence in the Allegro Kingdom to an end by summoning the magic of music
 
-- [ ] **Main goal**: Add background music to the Title Screen scene (WAG_TitleScreen_V1.wav)
-- [ ] Secondary goal level HERO: try to cut the loop between seconds 0:06 to 1:22
-- [ ] Secondary goal level GOD: try to keep the 0:06 pre-entry
-- [ ] **Main goal**: add the background music to the Credits scene with a correct loop
+- [x] **Main goal**: Add background music to the Title Screen scene (WAG_TitleScreen_V1.wav)
+- [x] Secondary goal level HERO: try to cut the loop between seconds 0:06 to 1:22
+- [x] Secondary goal level GOD: try to keep the 0:06 pre-entry
+- [x] **Main goal**: add the background music to the Credits scene with a correct loop
 Music_Forest_Mix.wav, pre-exit position 0:16.
-- [ ] Secondary goal level HERO: fade out music before exiting scene
-- [ ] **Main goal**: add background music to the game (Main Scene) You can use the
+- [x] Secondary goal level HERO: fade out music before exiting scene
+- [x] **Main goal**: add background music to the game (Main Scene) You can use the
 Music_Forest_Mix.wav loop.
 - [ ] Secondary goal level HERO: add the different background music loops to the different ambiences
 (check assets and pre-entry/post-exit points in the Wwise project)
