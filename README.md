@@ -50,7 +50,7 @@ Core)
 ### 4. User is king! Bring back UI sounds
 - [x] **Main goal**: add inventory sounds (Inventory.cs)
 - [x] **Main goal**: add menu sounds (Menu.cs)
-- [ ] **Main goal**: add quest evolution related sounds (QuestGiver.cs y QuestManager.cs)
+- [x] **Main goal**: add quest evolution related sounds (QuestGiver.cs y QuestManager.cs)
 
 
 ### 5. Achieve the final control over Allegro’s Kingdom
