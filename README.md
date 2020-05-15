@@ -18,9 +18,9 @@ Music_Forest_Mix.wav, pre-exit position 0:16.
 - [x] Secondary goal level HERO: fade out music before exiting scene
 - [x] **Main goal**: add background music to the game (Main Scene) You can use the
 Music_Forest_Mix.wav loop.
-- [ ] Secondary goal level HERO: add the different background music loops to the different ambiences
+- [x] Secondary goal level HERO: add the different background music loops to the different ambiences
 (check assets and pre-entry/post-exit points in the Wwise project)
-- [ ] Secondary goal level GOD: alternate day and night music loops
+- [x] Secondary goal level GOD: alternate day and night music loops
 
 
 ### 2. Bring Allegro Kingdom characters back to life: make their actions sound
@@ -48,8 +48,8 @@ Core)
 
 
 ### 4. User is king! Bring back UI sounds
-- [ ] **Main goal**: add inventory sounds (Inventory.cs)
-- [ ] **Main goal**: add menu sounds (Menu.cs)
+- [x] **Main goal**: add inventory sounds (Inventory.cs)
+- [x] **Main goal**: add menu sounds (Menu.cs)
 - [ ] **Main goal**: add quest evolution related sounds (QuestGiver.cs y QuestManager.cs)
 
 
