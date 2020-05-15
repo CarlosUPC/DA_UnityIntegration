@@ -5703,13 +5703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d194b927782944d2ca81f0d00674450b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material:
-    idInternal: -1018000567
-    valueGuidInternal: 4bf069be1855164c84665c693c29ca90
-    groupIdInternal: -230521123
-    groupGuidInternal: c8ce850565410c458f907f1fc8884a30
-    WwiseObjectReference: {fileID: 11400000, guid: aace550b8dea7dc43940e014cfe963fd,
-      type: 2}
+  material: 0
 --- !u!114 &114000012373020440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5806,10 +5800,6 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   daytime: 0
   AttackType: 6
-  shoot_audio_clip: {fileID: 8300000, guid: da9d875697d829c45b2f667f193ea723, type: 3}
-  charge_audio_clip: {fileID: 8300000, guid: f662e7365d26ea442868e823af080bb1, type: 3}
-  death_audio_clip: {fileID: 8300000, guid: da68c863930826744ba3af601bbd1d0b, type: 3}
-  hurt_audio_clip: {fileID: 8300000, guid: 119320dc23ecb234d94a17bf7dc429a5, type: 3}
   bulletPrefab: {fileID: 1000010899974662, guid: 5c95f6a102e4b41e89abc7926f58719b,
     type: 3}
   chargeParticles: {fileID: 1000010852368694, guid: 4aae3852ce6824049940c6fce5d1aa15,
@@ -5817,7 +5807,6 @@ MonoBehaviour:
   shootParticles: {fileID: 1000011806222222, guid: ea09e662b30aa4386af6bd74e3567ff7,
     type: 3}
   spitBulletSpawnPoint: {fileID: 1000010253179078}
-  audioSource: {fileID: 0}
   AttackSound:
     idInternal: 1042419433
     valueGuidInternal: 0a10915fa255464198da46a45310c142
@@ -5837,6 +5826,10 @@ MonoBehaviour:
     idInternal: 0
     valueGuidInternal: 00000000000000000000000000000000
     WwiseObjectReference: {fileID: 0}
+  shoot_audio_clip: {fileID: 8300000, guid: da9d875697d829c45b2f667f193ea723, type: 3}
+  charge_audio_clip: {fileID: 8300000, guid: f662e7365d26ea442868e823af080bb1, type: 3}
+  death_audio_clip: {fileID: 8300000, guid: da68c863930826744ba3af601bbd1d0b, type: 3}
+  hurt_audio_clip: {fileID: 8300000, guid: 119320dc23ecb234d94a17bf7dc429a5, type: 3}
 --- !u!114 &114000012379682154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5872,7 +5865,8 @@ AudioSource:
   m_GameObject: {fileID: 1000013187700430}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8779863242305611497, guid: 382b6f5f3f435a24d8c2d3ed49dfde9c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

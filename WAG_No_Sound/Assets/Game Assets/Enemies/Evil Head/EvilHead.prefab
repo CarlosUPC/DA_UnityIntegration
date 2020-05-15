@@ -5015,13 +5015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d194b927782944d2ca81f0d00674450b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material:
-    idInternal: 1216965916
-    valueGuidInternal: d5bb20b355a0b146b459ce4924b0299e
-    groupIdInternal: -230521123
-    groupGuidInternal: c8ce850565410c458f907f1fc8884a30
-    WwiseObjectReference: {fileID: 11400000, guid: a6c0fc96c4cb2f14b825dc3636924179,
-      type: 2}
+  material: 0
 --- !u!114 &114430652048464346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5228,7 +5222,8 @@ AudioSource:
   m_GameObject: {fileID: 1000012388946620}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8779863242305611497, guid: 382b6f5f3f435a24d8c2d3ed49dfde9c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -10251,6 +10246,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bbb0657c59a4f78a7d975cb1e30519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon_hit_sound: {fileID: 0}
+  weapon_impact_sound: {fileID: 0}
   WeaponImpact:
     idInternal: 0
     valueGuidInternal: 00000000000000000000000000000000
